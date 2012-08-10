@@ -23,7 +23,6 @@ class Recipe(zc.recipe.egg.Eggs):
 
     def gen_scripts(self):
         """Generates Riak bin scripts."""
-
         # TODO
 
         buildout = self.buildout['buildout']['directory']
@@ -48,11 +47,12 @@ class Recipe(zc.recipe.egg.Eggs):
         # Re-use the buildout download cache if defined
         downloads_dir = self.buildout['buildout'].get('download-cache')
         if downloads_dir is None:
-            download_dir = os.path.join(self.buildout['buildout']['directory'],
+            downloads_dir = os.path.join(self.buildout['buildout']['directory'],
                                         'downloads')
-            if not os.path.isdir(download_dir):
-                os.mkdir(download_dir)
-            self.buildout['buildout'].setdefault('download-cache', download_dir)
+            if not os.path.isdir(downloads_dir):
+                os.mkdir(downloads_dir)
+            self.buildout['buildout'].setdefault('download-cache', downloads_dir)
+        logger.info("downloading Riak distribution... %r %r" % (downloads_dir, arch_filename))
         src = os.path.join(downloads_dir, arch_filename)
         if not os.path.isfile(src):
             logger.info("downloading Riak distribution...")

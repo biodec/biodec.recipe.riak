@@ -37,7 +37,6 @@ We'll start by creating a buildout:
 
 Running the buildout gives us:
 
-    >>> output = system(buildout)
-    >>> if output.endswith("BBB TODO BBB\n"): True
-    ... else: print output
-    True
+    >>> print system(buildout)
+    Installing riak.
+

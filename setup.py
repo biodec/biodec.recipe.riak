@@ -44,6 +44,9 @@ setup(
         'zc.buildout',
         'zc.recipe.egg',
         ],
+    extras_require={
+        'test': ['zope.testing'],
+    },
     entry_points={'zc.buildout': ['default = biodec.recipe.riak:Recipe']},
     zip_safe=False,
     )
