@@ -39,4 +39,8 @@ Running the buildout gives us:
 
     >>> print system(buildout)
     Installing riak.
-
+    ...
+    ==> rel (compile)
+    ==> riak (compile)
+    Compiled src/etop_txt.erl
+    ...
