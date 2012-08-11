@@ -42,7 +42,7 @@ Running the buildout gives us:
     Installing riakbuild.
     ...
     ==> rel (compile)
-    ==> riak (compile)
+    ==> riakbuild (compile)
     Compiled src/etop_txt.erl
     ...
 
