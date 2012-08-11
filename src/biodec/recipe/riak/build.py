@@ -99,10 +99,6 @@ class BuildRecipe(zc.recipe.egg.Eggs):
         else:
             logger.info("Riak already installed.")
 
-        r = pkg_resources.working_set.find(
-            pkg_resources.Requirement.parse('simplejson'))
-
-        os.environ['PYTHONPATH'] = r.location
         erlang_path = self.options.get('erlang-path')
         if erlang_path:
             new_path = [erlang_path] + os.environ['PATH'].split(':')

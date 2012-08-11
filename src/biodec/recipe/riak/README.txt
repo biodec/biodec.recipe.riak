@@ -22,14 +22,14 @@ We will define a buildout template used by the recipe:
 
     >>> buildout_cfg = """
     ... [buildout]
-    ... parts = riak instance
+    ... parts = riakbuild riak1
     ... offline = true
     ...
-    ... [riak]
-    ... recipe = biodec.recipe.riak
+    ... [riakbuild]
+    ... recipe = biodec.recipe.riak:build
     ... url = http://downloads.basho.com/riak/CURRENT/riak-1.1.4.tar.gz
     ...
-    ... [instance]
+    ... [riak1]
     ... recipe = biodec.recipe.riak:instance
     ... """
 
@@ -41,11 +41,11 @@ We'll start by creating a buildout:
 Running the buildout gives us:
 
     >>> print system(buildout)
-    Installing riak.
+    Installing riakbuild.
     ...
     ==> rel (compile)
     ==> riak (compile)
     Compiled src/etop_txt.erl
     ...
-    Installing instance.
+    Installing riak1.
 
