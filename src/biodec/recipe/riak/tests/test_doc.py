@@ -17,7 +17,6 @@ def setUp(test):
     zc.buildout.testing.buildoutSetUp(test)
     zc.buildout.testing.install_develop('zc.recipe.egg', test)
     zc.buildout.testing.install_develop('biodec.recipe.riak', test)
-    zc.buildout.testing.install_develop('simplejson', test)
 
 
 def test_suite():
