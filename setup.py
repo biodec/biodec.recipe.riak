@@ -40,13 +40,17 @@ setup(
     namespace_packages=['biodec', 'biodec.recipe'],
     install_requires=[
         'setuptools',
-        'simplejson',
         'zc.buildout',
         'zc.recipe.egg',
         ],
     extras_require={
         'test': ['zope.testing'],
     },
-    entry_points={'zc.buildout': ['default = biodec.recipe.riak:Recipe']},
+    entry_points={
+         'zc.buildout': [
+             'build = biodec.recipe.riak.build:BuildRecipe',
+             'instance = biodec.recipe.riak.instance:InstanceRecipe',
+         ]
+    },
     zip_safe=False,
     )
