@@ -155,6 +155,6 @@ CONFIG_TEMPLATE = '''
 {runner_base_dir,    "${RUNNER_SCRIPT_DIR%%/*}"}.
 {runner_etc_dir,     "$RUNNER_BASE_DIR/etc"}.
 {runner_log_dir,     "$RUNNER_BASE_DIR/log"}.
-{pipe_dir,           "/tmp/$RUNNER_BASE_DIR/"}.
+{pipe_dir,           "$RUNNER_BASE_DIR/tmp"}.
 {runner_user,        ""}.        
 '''
