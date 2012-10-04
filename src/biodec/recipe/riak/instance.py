@@ -17,7 +17,7 @@
 """Config Recipe riak"""
 import os
 import subprocess
-
+import logging
 
 RECIPE_BUILD_NAME = 'biodec.recipe.riak:build'
 
@@ -41,11 +41,13 @@ class InstanceRecipe(object):
         self.name = name
         location = options.get(
             'location', buildout['buildout']['parts-directory'])
+        print location
         options['location'] = os.path.join(location, name)
         options['prefix'] = options['location']
 
         self.options = options
         self.buildoptions = get_options_from_build(buildout, options)
+        self.logger = logging.getLogger(__name__)
 
     def gen_scripts(self, target_dir):
         """Generates Riak bin scripts."""
@@ -62,6 +64,7 @@ class InstanceRecipe(object):
             f = open(script, 'wb')
             f.write('#!/usr/bin/env bash\n%s\ncd %s\nexec bin/%s $@\n' %
                 (erlang_path, target_dir, scriptname))
+            print erlang_path, target_dir, scriptname
             f.close()
             os.chmod(script, 0755)
             scripts.append(script)
@@ -72,9 +75,11 @@ class InstanceRecipe(object):
         dst = self.options.setdefault('location',
             os.path.join(self.buildout['buildout']['parts-directory'],
             self.name))
+        print 'dst', dst
         var = os.path.join(
             self.buildout['buildout']['directory'],
             'var', self.name)
+        print 'var', var
         if not os.path.isdir(dst):
             os.mkdir(dst)
         target_dir = os.path.join(dst, 'rel')
@@ -155,6 +160,6 @@ CONFIG_TEMPLATE = '''
 {runner_base_dir,    "${RUNNER_SCRIPT_DIR%%/*}"}.
 {runner_etc_dir,     "$RUNNER_BASE_DIR/etc"}.
 {runner_log_dir,     "$RUNNER_BASE_DIR/log"}.
-{pipe_dir,           "$RUNNER_BASE_DIR/tmp"}.
+{pipe_dir,           "$RUNNER_BASE_DIR/tmp/"}.
 {runner_user,        ""}.        
 '''
