@@ -27,7 +27,7 @@ We will define a buildout template used by the recipe:
     ...
     ... [riakbuild]
     ... recipe = biodec.recipe.riak:build
-    ... url = http://downloads.basho.com/riak/CURRENT/riak-1.1.4.tar.gz
+    ... url = http://s3.amazonaws.com/downloads.basho.com/riak/CURRENT/riak-1.2.0.tar.gz
     ...
     ... """
 
@@ -45,4 +45,8 @@ Running the buildout gives us:
     ==> riakbuild (compile)
     Compiled src/etop_txt.erl
     ...
+
+Re-run buildout:
+    >>> print system(buildout)
+    Updating riakbuild.
 
