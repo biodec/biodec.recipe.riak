@@ -28,10 +28,11 @@ def get_options_from_build(buildout, options):
         return buildout[part]
 
     for part in buildout.keys():
-        if buildout[part].has_key('recipe') and \
-            buildout[part]['recipe'] == RECIPE_BUILD_NAME:
+        if 'recipe' in buildout[part] and \
+                buildout[part]['recipe'] == RECIPE_BUILD_NAME:
             return buildout[part]
     return {}
+
 
 class InstanceRecipe(object):
     """This recipe is used by zc.buildout"""
@@ -59,11 +60,11 @@ class InstanceRecipe(object):
         else:
             erlang_path = ''
         scripts = []
-        for scriptname in  ('riak', 'riak-admin', 'search-cmd'):
+        for scriptname in ('riak', 'riak-admin', 'search-cmd'):
             script = os.path.join(bindir, "%s.%s" % (self.name, scriptname))
             f = open(script, 'wb')
             f.write('#!/usr/bin/env bash\n%s\ncd %s\nexec bin/%s $@\n' %
-                (erlang_path, target_dir, scriptname))
+                    (erlang_path, target_dir, scriptname))
             print erlang_path, target_dir, scriptname
             f.close()
             os.chmod(script, 0755)
@@ -72,16 +73,19 @@ class InstanceRecipe(object):
 
     def install(self):
         """ install riak instance """
-        dst = self.options.setdefault('location',
+        dst = self.options.setdefault(
+            'location',
             os.path.join(self.buildout['buildout']['parts-directory'],
-            self.name))
+                         self.name))
         print 'dst', dst
+        if not os.path.isdir(dst):
+            os.mkdir(dst)
         var = os.path.join(
             self.buildout['buildout']['directory'],
             'var', self.name)
         print 'var', var
-        if not os.path.isdir(dst):
-            os.mkdir(dst)
+        if not os.path.isdir(var):
+            os.mkdir(var)
         target_dir = os.path.join(dst, 'rel')
         overlay_vars = os.path.join(dst, 'vars.config')
         open(overlay_vars, 'w').write(CONFIG_TEMPLATE % dict(
@@ -94,16 +98,18 @@ class InstanceRecipe(object):
         os.chdir(self.buildoptions['location'])
         my_env = os.environ.copy()
         if self.buildoptions.get('erlang-path'):
-            my_env["PATH"] = "%s:%s" % (self.buildoptions.get('erlang-path'), my_env.get("PATH"))
+            my_env["PATH"] = "%s:%s" % (
+                self.buildoptions.get('erlang-path'), my_env.get("PATH"))
         retcode = subprocess.Popen(
-            ['./rebar', 'generate', 'target_dir=%s' % target_dir,'overlay_vars=%s' % overlay_vars], 
+            ['./rebar', 'generate',
+             'target_dir=%s' % target_dir, 'overlay_vars=%s' % overlay_vars],
             env=my_env).wait()
         if retcode != 0:
             raise Exception("Creating Riak instance %s" % self.name)
         os.chdir(old_cwd)
-        
+
         scripts = self.gen_scripts(target_dir)
-        return [dst,] + scripts
+        return [dst, ] + scripts
 
     def update(self):
         """ update riak instance """
@@ -159,7 +165,7 @@ CONFIG_TEMPLATE = '''
 {runner_script_dir,  "$(cd ${0%%/*} && pwd)"}.
 {runner_base_dir,    "${RUNNER_SCRIPT_DIR%%/*}"}.
 {runner_etc_dir,     "$RUNNER_BASE_DIR/etc"}.
-{runner_log_dir,     "$RUNNER_BASE_DIR/log"}.
-{pipe_dir,           "$RUNNER_BASE_DIR/tmp/"}.
-{runner_user,        ""}.        
+{runner_log_dir,     "{{platform_log_dir}}"}.
+{pipe_dir,           "%(var)s/tmp/"}.
+{runner_user,        ""}.
 '''

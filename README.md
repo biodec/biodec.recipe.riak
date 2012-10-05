@@ -6,6 +6,8 @@ zc.buildout recipe for downloading and installing Riak.
 
 [![Build Status](https://secure.travis-ci.org/biodec/biodec.recipe.riak.png)](http://travis-ci.org/biodec/biodec.recipe.riak)
 
+see src/biodec/recipe/biodec/README.txt
+
 Credits
 =======
 
