@@ -27,7 +27,7 @@ We will define a buildout template used by the recipe:
     ...
     ... [riakbuild]
     ... recipe = biodec.recipe.riak:build
-    ... url = http://s3.amazonaws.com/downloads.basho.com/riak/CURRENT/riak-1.2.0.tar.gz
+    ... url = http://s3.amazonaws.com/downloads.basho.com/riak/1.2/1.2.1/riak-1.2.1.tar.gz
     ...
     ... """
 
