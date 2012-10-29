@@ -10,7 +10,7 @@ def read(*rnames):
 
 setup(
     name="biodec.recipe.riak",
-    version="1.0.0",
+    version="1.0.0a1",
     author="Mauro Amico",
     author_email="mauro@biodec.com",
     description="ZC Buildout recipe for setting up Riak.",
@@ -25,7 +25,7 @@ setup(
         read('CHANGES.txt')
         ),
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 3 - Alpha',
         'Framework :: Buildout',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
