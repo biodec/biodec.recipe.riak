@@ -10,7 +10,7 @@ def read(*rnames):
 
 setup(
     name="biodec.recipe.riak",
-    version="1.0.0a1",
+    version='1.0.0a2.dev0',
     author="Mauro Amico",
     author_email="mauro@biodec.com",
     description="ZC Buildout recipe for setting up Riak.",
